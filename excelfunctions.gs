@@ -7,6 +7,17 @@ function MainExcelFunction() {
   datacleaning(spreadsheet,4);
 }
 
+function get_colnumber_fromname(cols,name){
+  var found = false;
+  for (var i = 0; i < cols.length; i++) {
+    if (cols[i] == name){
+      found = i+1
+      break;
+    }
+  }
+  return found;
+}
+
 function datacleaning(spreadsheet,col){
   var lastrow = spreadsheet.getLastRow();
   for (var i = 1; i < lastrow; i++) {
@@ -25,11 +36,11 @@ function getallvalues(spreadsheet,startline,startcolumn,endcolumn){
   return spreadsheet.getRange(startline,startcolumn,lastrow-1,endcolumn).getValues(); 
 }
 
-function getvaluesfromrow(values,rownumber,cols){
+function getvaluesfromrow(values,startrow,rownumber,cols){
   var row;
   var rowdata = {};
   for (var i = 0; i < values.length; i++) {
-    if (i == rownumber-1){
+    if (i == (rownumber-startrow)){
       for(key in cols){
         rowdata[cols[key]] = values[i][key];
       }
