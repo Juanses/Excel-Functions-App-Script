@@ -18,6 +18,11 @@ function get_colnumber_fromname(cols,name){
   return found;
 }
 
+/*
+function write_data_fromobject(spreadsheet,row,label,data){
+  spreadsheet.getRange(row,get_colnumber_fromname(cols,label)).setValue(data);
+}*/
+
 function datacleaning(spreadsheet,col){
   var lastrow = spreadsheet.getLastRow();
   for (var i = 1; i < lastrow; i++) {
