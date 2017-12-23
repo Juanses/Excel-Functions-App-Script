@@ -1,10 +1,13 @@
 function MainExcelFunction() {
   var sheet = 0;
-  var spreadsheet = SpreadsheetApp.openById("").getSheets()[sheet];  
+  var spreadsheet = SpreadsheetApp.openById("1XxRPPe2IGikhPNnTjsxdWk2GfhnDetnTdSNdrL8JXQc").getSheets()[sheet];  
   var cols = ["horodateur","nomdefamille","prenom","emailpersonnel","ddn","numerodetelephonemobile","adressepersonnelle","adresseprofessionnelle","cp","ville","pays","profession","specialite","materiel","iban","swift","actif"];
-  //var values = getallvalues(spreadsheet,2,1,cols.length+1);
-  //var object = getvaluesfromrow(values,4,cols);
-  datacleaning(spreadsheet,4);
+}
+
+function setvalueincol(value,sheet,row,colname,cols){
+  var index = cols.indexOf(colname);
+  var range = sheet.getRange(row,index+1);
+  range.setValue(value);
 }
 
 function get_colnumber_fromname(cols,name){
