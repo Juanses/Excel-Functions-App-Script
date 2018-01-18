@@ -1,59 +1,70 @@
-function MainExcelFunction() {
-  var sheet = 0;
-  var spreadsheet = SpreadsheetApp.openById("1XxRPPe2IGikhPNnTjsxdWk2GfhnDetnTdSNdrL8JXQc").getSheets()[sheet];  
-  var cols = ["horodateur","nomdefamille","prenom","emailpersonnel","ddn","numerodetelephonemobile","adressepersonnelle","adresseprofessionnelle","cp","ville","pays","profession","specialite","materiel","iban","swift","actif"];
-}
-
-function setvalueincol(value,sheet,row,colname,cols){
-  var index = cols.indexOf(colname);
-  var range = sheet.getRange(row,index+1);
-  range.setValue(value);
-}
-
-function get_colnumber_fromname(cols,name){
-  var found = false;
-  for (var i = 0; i < cols.length; i++) {
-    if (cols[i] == name){
-      found = i+1
-      break;
-    }
+var excelClass = function(id){
+  this.id = id;
+  
+  //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
+  this.setsheet = function(sheetnumber,cols){
+    this.sheet = SpreadsheetApp.openById(this.id).getSheets()[sheetnumber];  
+    this.cols = cols;
   }
-  return found;
-}
-
-/*
-function write_data_fromobject(spreadsheet,row,label,data){
-  spreadsheet.getRange(row,get_colnumber_fromname(cols,label)).setValue(data);
-}*/
-
-function datacleaning(spreadsheet,col){
-  var lastrow = spreadsheet.getLastRow();
-  for (var i = 1; i < lastrow; i++) {
-    /*if (parseInt(spreadsheet.getRange(i,col).getValue()) == 1){
-      spreadsheet.getRange(i,col-1).setValue("");
-    };*/
-    value = spreadsheet.getRange(i,col).getValue();
-    if (value.indexOf("mhq.fr") != -1){
-      spreadsheet.getRange(i,col+2).setValue("del");
-    };
-  }  
-}
-
-function getallvalues(spreadsheet,startline,startcolumn,endcolumn){
-  var lastrow = spreadsheet.getLastRow();
-  return spreadsheet.getRange(startline,startcolumn,lastrow-1,endcolumn).getValues(); 
-}
-
-function getvaluesfromrow(values,startrow,rownumber,cols){
-  var row;
-  var rowdata = {};
-  for (var i = 0; i < values.length; i++) {
-    if (i == (rownumber-startrow)){
-      for(key in cols){
-        rowdata[cols[key]] = values[i][key];
+  
+  //SET FONT COLOR IN CELL BASED ON ROW AND COLNAME
+  this.setcolorincol = function (color,row,colname){
+    var index = this.cols.indexOf(colname);
+    var range = this.sheet.getRange(row,index+1);
+    range.setFontColor(color);
+  }
+  
+  //SET VALUE IN CELL BASED ON ROW AND COLNAME
+  this.setvalueincol = function (value,row,colname){
+    var index = this.cols.indexOf(colname);
+    var range = this.sheet.getRange(row,index+1);
+    range.setValue(value);
+  }
+  
+  //SET VALUE IN CELL BASED ON ROW AND COLNAME
+  this.setformulaincol = function (value,row,colname){
+    var index = this.cols.indexOf(colname);
+    var range = this.sheet.getRange(row,index+1);
+    range.setFormula(value);
+  }
+   
+  //GET LAST ROW OF THE SHEET
+  this.getlastrow = function(){
+    this.lastrow = this.sheet.getLastRow()+1;
+    return this.lastrow;
+  }
+  
+  //GET COL NUMBER BASED ON COLNAME
+  this.get_colnumber_fromname = function (name){
+    var found = false;
+    for (var i = 0; i < this.cols.length; i++) {
+      if (this.cols[i] == name){
+        found = i+1
+        break;
       }
-      break;
     }
-  }   
-  return rowdata;
+    return found;
+  }
+  
+  //GET ALL THE VALUES IN A RANGE
+  this.getallvalues = function(startline,startcolumn,endcolumn){
+    var lastrow = this.sheet.getLastRow();
+    return this.sheet.getRange(startline,startcolumn,lastrow-1,endcolumn).getValues(); 
+  }
+  
+  //GET ALL THE VALUES FROM A ROW BASED ON THE COLUMNS 
+  this.getvaluesfromrow = function(values,startrow,rownumber){
+    var row;
+    var rowdata = {};
+    for (var i = 0; i < values.length; i++) {
+      if (i == (rownumber-startrow)){
+        for(key in this.cols){
+          rowdata[this.cols[key]] = values[i][key];
+        }
+        break;
+      }
+    }   
+    return rowdata;
+  } 
+  
 }
