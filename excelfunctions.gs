@@ -1,15 +1,15 @@
 var excelClass = function(){
   
   //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
-  this.setsheetbynumber = function (number){
+  this.setSheetbyNumber = function (number){
     this.ss = SpreadsheetApp.getActiveSpreadsheet();
     this.sheet = this.ss.getSheets()[number]; 
   }
   
-  this.setcols = function (cols){
+  this.setCols = function (cols){
     this.cols = cols;
   }
-  
+   
   //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
   this.setsheetbyId = function(id,sheetnumber,cols){
     this.sheet = SpreadsheetApp.openById(id).getSheets()[sheetnumber];  
@@ -24,10 +24,9 @@ var excelClass = function(){
   }
   
   //SET VALUE IN CELL BASED ON ROW AND COLNAME
-  this.setvalueincol = function (value,row,colname){
+  this.setValueinCol = function (value,row,colname){
     var index = this.cols.indexOf(colname);
-    var range = this.sheet.getRange(row,index+1);
-    range.setValue(value);
+    if (index != -1) {var range = this.sheet.getRange(row,index+1);range.setValue(value);}
   }
   
   //SET VALUE IN CELL BASED ON ROW AND COLNAME
@@ -38,7 +37,7 @@ var excelClass = function(){
   }
    
   //GET LAST ROW OF THE SHEET
-  this.getlastrow = function(){
+  this.getLastRow = function(){
     this.lastrow = this.sheet.getLastRow()+1;
     return this.lastrow;
   }
@@ -75,5 +74,11 @@ var excelClass = function(){
     }   
     return rowdata;
   } 
-  
+ 
+  this.setDataValidationbyRange = function (sheet1,optionsrange,sheet2,validation){
+    var range1 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[sheet1].getRange(optionsrange);
+    var range2 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[sheet2].getRange(validation);
+    var rule = SpreadsheetApp.newDataValidation().requireValueInRange(range1).build();
+    range2.setDataValidation(rule);
+  }
 }
