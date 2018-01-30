@@ -1,9 +1,18 @@
-var excelClass = function(id){
-  this.id = id;
+var excelClass = function(){
   
   //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
-  this.setsheet = function(sheetnumber,cols){
-    this.sheet = SpreadsheetApp.openById(this.id).getSheets()[sheetnumber];  
+  this.setsheetbynumber = function (number){
+    this.ss = SpreadsheetApp.getActiveSpreadsheet();
+    this.sheet = this.ss.getSheets()[number]; 
+  }
+  
+  this.setcols = function (cols){
+    this.cols = cols;
+  }
+  
+  //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
+  this.setsheetbyId = function(id,sheetnumber,cols){
+    this.sheet = SpreadsheetApp.openById(id).getSheets()[sheetnumber];  
     this.cols = cols;
   }
   
