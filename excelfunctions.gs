@@ -6,6 +6,12 @@ var excelClass = function(){
     this.sheet = this.ss.getSheets()[number]; 
   }
   
+  //SET SHEET FROM SHEET NAME
+  this.setSheetbyName = function (name){
+    this.ss = SpreadsheetApp.getActiveSpreadsheet();
+    this.sheet = this.ss.getSheetByName(name); 
+  }
+  
   //GET THE LETTER OF THE COLUMN CORRESPONDING TO THE COLS TITLE
   this.getColletterfromCol = function (colname){
     var index = this.cols.indexOf(colname);
