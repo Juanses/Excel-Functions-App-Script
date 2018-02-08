@@ -4,7 +4,7 @@ var excelClass = function(){
   
   var excel = new excelClass();
   excel.setSheetbyName("RH");
-  var cols = ["nom","prenom","fonction","email","telephone","ddn","ldn","adresse","ddc","feuille"]
+  var cols = ["nom","prenom","fonction","email","telephone","ddn","ldn","adresse","ddc","feuille"];
   excel.setCols(cols);
   var values = excel.getallvalues(2,1,cols.length);
   var feuillename = excel.get_colnumber_fromname("feuille");
