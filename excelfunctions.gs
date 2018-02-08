@@ -1,4 +1,18 @@
 var excelClass = function(){
+  /*
+  GIST - Start - 
+  
+  var excel = new excelClass();
+  excel.setSheetbyName("RH");
+  var cols = ["nom","prenom","fonction","email","telephone","ddn","ldn","adresse","ddc","feuille"]
+  excel.setCols(cols);
+  var values = excel.getallvalues(2,1,cols.length);
+  var feuillename = excel.get_colnumber_fromname("feuille");
+  for (var i = 0; i < values.length; i++) {
+    Logger.log(values[0][feuillename]);
+  }
+  */
+  
   
   //*************** SHEET START ***************
   
@@ -15,9 +29,8 @@ var excelClass = function(){
   }
   
   //SET SHEET FROM SPREEDSHEET ID
-  this.setsheetbyId = function(id,sheetnumber,cols){
-    this.sheet = SpreadsheetApp.openById(id).getSheets()[sheetnumber];  
-    this.cols = cols;
+  this.setsheetbyId = function(id,sheetnumber){
+    this.sheet = SpreadsheetApp.openById(id).getSheets()[sheetnumber];
   }
   
   //*************** SHEET END ***************
