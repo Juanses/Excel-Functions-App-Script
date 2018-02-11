@@ -9,7 +9,7 @@ var excelClass = function(){
   var values = excel.getallvalues(2,1,cols.length);
   var feuillename = excel.get_colnumber_fromname("feuille");
   for (var i = 0; i < values.length; i++) {
-    Logger.log(values[0][feuillename]);
+  Logger.log(values[0][feuillename]);
   }
   */
   
@@ -114,5 +114,50 @@ var excelClass = function(){
     range2.setDataValidation(rule);
   }
   
+  this.searchspreadsheet = function (spreadsheetid,value,col){
+    var unsuscribedbsheet = SpreadsheetApp.openById(spreadsheetid).getSheets()[0];
+    var sheetlastRow = unsuscribedbsheet.getLastRow();
+    var values = unsuscribedbsheet.getRange(2,1,sheetlastRow-1,15).getValues();
+    var enum=2;
+    var found=-1;
+    values.forEach(function(row){
+      if (row[col-1] == value){
+        found = enum;
+        return found;
+      }
+      enum++;
+    });
+    return found;
+  }
+  
+  this.removeduplicates = function (spreadsheetid,sheet,startrow,col){
+    //I remove duplicates and return the number of unique responses
+    var responses = SpreadsheetApp.openById(spreadsheetid);
+    var responsessheet = responses.getSheets()[sheet];
+    var responsestRow = responsessheet.getLastRow();
+    if (responsestRow != 1){
+      //The form has responses
+      var values = responsessheet.getRange(startrow,col,responsestRow-(startrow-1),1).getValues();
+      var buffer = []; 
+      var continuer = true;
+      var i = 0;
+      while (continuer) {
+        if (buffer.indexOf(values[i][0]) === -1) {
+          buffer.push(values[i][0]);
+          i++;
+        }
+        else{
+          responsessheet.deleteRow(i+2);
+          values.splice(i, 1);
+          i = buffer.length;
+        }
+        continuer = (buffer.length == values.length)?false:true;
+      }
+      return buffer.length;
+    }
+    else{
+      return 0;
+    }
+  }
   //*************** OTHER END ***************
 }
