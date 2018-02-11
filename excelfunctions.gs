@@ -1,4 +1,4 @@
-var excelClass = function(){
+var ExcelClass = function(){
   /*
   GIST - Start - 
   
@@ -12,6 +12,20 @@ var excelClass = function(){
   Logger.log(values[0][feuillename]);
   }
   */
+  
+  //*************** SPREADSHEET START ***************
+  
+  //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
+  this.setSpreadhsheetbyDefault = function(){
+    this.ss = SpreadsheetApp.getActiveSpreadsheet();
+  }
+  
+  //SET SHEET FROM SHEET NUMBER [FROM 0 TO X]
+  this.setSpreadhsheetbyId = function(id){
+    this.ss = SpreadsheetApp.openById(id);
+  }
+  
+  //*************** SPREADSHEET END ***************
   
   
   //*************** SHEET START ***************
@@ -30,7 +44,8 @@ var excelClass = function(){
   
   //SET SHEET FROM SPREEDSHEET ID
   this.setsheetbyId = function(id,sheetnumber){
-    this.sheet = SpreadsheetApp.openById(id).getSheets()[sheetnumber];
+    this.ss = SpreadsheetApp.openById(id);
+    this.sheet = this.ss.getSheets()[sheetnumber];
   }
   
   //*************** SHEET END ***************
@@ -100,6 +115,12 @@ var excelClass = function(){
   
   //*************** OTHER START ***************
   
+  this.exportToPdf = function(){
+    //return file
+    return DriveApp.createFile(this.ss.getBlob());
+  }
+  
+  
   //SET FONT COLOR IN CELL BASED ON ROW AND COLNAME
   this.setcolorincol = function (color,row,colname){
     var index = this.cols.indexOf(colname);
@@ -107,6 +128,7 @@ var excelClass = function(){
     range.setFontColor(color);
   }
   
+  //SET DATA VALIDATION
   this.setDataValidationbyRange = function (sheet1,optionsrange,sheet2,validation){
     var range1 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[sheet1].getRange(optionsrange);
     var range2 = SpreadsheetApp.getActiveSpreadsheet().getSheets()[sheet2].getRange(validation);
@@ -114,11 +136,12 @@ var excelClass = function(){
     range2.setDataValidation(rule);
   }
   
+  //DATA SEARCH
   this.searchspreadsheet = function (spreadsheetid,value,col){
     var unsuscribedbsheet = SpreadsheetApp.openById(spreadsheetid).getSheets()[0];
     var sheetlastRow = unsuscribedbsheet.getLastRow();
-    var values = unsuscribedbsheet.getRange(2,1,sheetlastRow-1,15).getValues();
-    var enum=2;
+    // A CHANGER var values = unsuscribedbsheet.getRange(2,1,sheetlastRow-1,15).getValues();
+    // A CHANGER var enum=2;
     var found=-1;
     values.forEach(function(row){
       if (row[col-1] == value){
@@ -130,6 +153,7 @@ var excelClass = function(){
     return found;
   }
   
+  //REMOVE DUPLICATES
   this.removeduplicates = function (spreadsheetid,sheet,startrow,col){
     //I remove duplicates and return the number of unique responses
     var responses = SpreadsheetApp.openById(spreadsheetid);
