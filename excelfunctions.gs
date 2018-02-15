@@ -1,8 +1,7 @@
 var ExcelClass = function(){
   /*
   GIST - Start - 
-  
-  var excel = new excelClass();
+  var excel = new ExcelClass();
   excel.setSheetbyName("RH");
   var cols = ["nom","prenom","fonction","email","telephone","ddn","ldn","adresse","ddc","feuille"];
   excel.setCols(cols);
@@ -11,6 +10,25 @@ var ExcelClass = function(){
   for (var i = 0; i < values.length; i++) {
   Logger.log(values[0][feuillename]);
   }
+  
+  function doGet(e) {
+  var excel = new ExcelClass();
+  excel.setsheetbyId("1Bz5ZcdWvpBOudh0nd2EwapFIpspWZs0W4zjmof4IZUI",0);
+  var cols = ["email","prenom","nom","spe","telephone"];
+  excel.setCols(cols);
+  var values = excel.getallvalues(2,1,cols.length);
+  var result = {};
+  for (var i = 0; i < values.length; i++) {
+  result[i] = {};
+  for (var j = 0; j < cols.length; j++) {
+  //Logger.log(values[i][excel.get_colnumber_fromname(cols[j])]);
+  result[i][cols[j]]= values[i][excel.get_colnumber_fromname(cols[j])];
+  }
+  }
+  return ContentService.createTextOutput(JSON.stringify(result))
+  .setMimeType(ContentService.MimeType.JSON);
+  }
+  
   */
   
   //*************** SPREADSHEET START ***************
