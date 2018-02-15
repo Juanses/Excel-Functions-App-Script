@@ -111,7 +111,7 @@ var ExcelClass = function(){
   //GET ALL THE VALUES IN A RANGE
   this.getallvalues = function(startline,startcolumn,endcolumn){
     var lastrow = this.sheet.getLastRow();
-    return this.sheet.getRange(startline,startcolumn,lastrow-1,endcolumn).getValues(); 
+    return this.sheet.getRange(startline,startcolumn,lastrow-(startline-1),endcolumn).getValues(); 
   }
   
   //GET ALL THE VALUES AND CREATE AN OBJECT FROM A ROW BASED ON THE COLUMNS 
