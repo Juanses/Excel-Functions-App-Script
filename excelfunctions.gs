@@ -96,7 +96,7 @@ var ExcelClass = function(){
   }
   
   //SET VALUE IN CELL BASED ON ROW AND COLNAME
-  this.setformulaincol = function (value,row,colname){
+  this.setFormulainCol = function (value,row,colname){
     var index = this.cols.indexOf(colname);
     var range = this.sheet.getRange(row,index+1);
     range.setFormula(value);
@@ -128,6 +128,14 @@ var ExcelClass = function(){
     }   
     return rowdata;
   } 
+  
+  this.getSpecificDatafromRow = function(values,selectedarray){
+    var rowdata = {}; 
+    for (var j= 0; j < selectedarray.length ; j++) {
+      rowdata[selectedarray[j]] = values[this.get_colnumber_fromname(selectedarray[j])];
+    }
+    return rowdata; 
+  }
   
   //*************** VALUES END ***************
   
