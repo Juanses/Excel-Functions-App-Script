@@ -108,6 +108,12 @@ var ExcelClass = function(){
     return this.lastrow;
   }
   
+  this.appendvalue = function(value,colname){
+    var index = this.cols.indexOf(colname);
+    var row = this.sheet.getLastRow()+1;
+    var range = this.sheet.getRange(row,index+1);
+  }
+  
   //GET ALL THE VALUES IN A RANGE
   this.getallvalues = function(startline,startcolumn,endcolumn){
     var lastrow = this.sheet.getLastRow();
