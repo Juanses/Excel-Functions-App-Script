@@ -109,9 +109,18 @@ var ExcelClass = function(){
   }
   
   this.appendvalue = function(value,colname){
-    var index = this.cols.indexOf(colname);
     var row = this.sheet.getLastRow()+1;
-    var range = this.sheet.getRange(row,index+1);
+    this.setValueinCol(value,row,colname);
+  }
+  
+  this.appendvalues = function(values){
+    //values object = {colname : value, colname : value ....}
+    var row = this.sheet.getLastRow()+1;
+    for (var key in values) {
+      var index = this.cols.indexOf(key);
+       if (index != -1) {var range = this.sheet.getRange(row,index+1);range.setValue(values[key]);}
+
+    }  
   }
   
   //GET ALL THE VALUES IN A RANGE
