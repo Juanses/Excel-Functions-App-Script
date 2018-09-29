@@ -95,6 +95,12 @@ var ExcelClass = function(){
     if (index != -1) {var range = this.sheet.getRange(row,index+1);range.setValue(value);}
   }
   
+  //SET VALUE IN CELLS BASED ON RANGE
+  this.setValuesinRange = function (rowinit,colinit,rownumber,colnumber,values){
+    //values is a 2D array = [[A,B,C],[D,E,F]]
+    excel.sheet.getRange(rowinit, colinit, rownumber, colnumber).setValues(values);
+  }
+  
   //SET VALUE IN CELL BASED ON ROW AND COLNAME
   this.setFormulainCol = function (value,row,colname){
     var index = this.cols.indexOf(colname);
