@@ -3,9 +3,8 @@ var ExcelClass = function(){
   GIST - Start - 
   var excel = new ExcelClass();
   excel.setSheetbyName("RH");
-  var cols = ["nom","prenom","fonction","email","telephone","ddn","ldn","adresse","ddc","feuille"];
-  excel.setCols(cols);
-  var values = excel.getallvalues(2,1,cols.length);
+  excel.setColsAuto();
+  var values = excel.getallvalues(2,1,excel.cols.length);
   var feuillename = excel.get_colnumber_fromname("feuille");
   for (var i = 0; i < values.length; i++) {
   Logger.log(values[0][feuillename]);
@@ -261,7 +260,7 @@ var ExcelClass = function(){
   //*************** OTHER END ***************
 }
 
-//*************** Excel Functions ***************  
+//*************** EXCEL FUNCTIONS ***************  
 
 function ColumnSplit(range,delimiter) {
   var delimiter = (delimiter == undefined)? "," : delimiter;
