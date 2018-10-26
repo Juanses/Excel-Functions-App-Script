@@ -124,8 +124,8 @@ var ExcelClass = function(){
     var row = this.sheet.getLastRow()+1;
     for (var key in values) {
       var index = this.cols.indexOf(key);
-       if (index != -1) {var range = this.sheet.getRange(row,index+1);range.setValue(values[key]);}
-
+      if (index != -1) {var range = this.sheet.getRange(row,index+1);range.setValue(values[key]);}
+      
     }  
   }
   
@@ -160,7 +160,7 @@ var ExcelClass = function(){
   
   //*************** VALUES END ***************
   
-  //*************** OTHER START ***************
+  //*************** OTHER START ***************  
   
   this.exportToPdf = function(){
     //return file
@@ -231,4 +231,20 @@ var ExcelClass = function(){
     }
   }
   //*************** OTHER END ***************
+}
+
+//*************** Excel Functions ***************  
+
+function ColumnSplit(range,delimiter) {
+  var delimiter = (delimiter == undefined)? "," : delimiter;
+  var matrice = [];
+  for (i = 0; i < range.length; i++) {
+    var value = range[i][0];
+    var splitmatrix = value.split(delimiter);
+    for (element in splitmatrix){
+      matrice.push(splitmatrix[element].trim());
+    }
+  }
+  return matrice;
+  
 }
