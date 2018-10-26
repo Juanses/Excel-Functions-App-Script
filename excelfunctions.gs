@@ -85,6 +85,34 @@ var ExcelClass = function(){
     this.cols = cols;
   }
   
+  //SET COLS AUTOMATICALLY IN EXCEL OBJECT
+  this.setColsAuto = function (){
+    var columns = this.sheet.getRange(1, 1, 1, this.sheet.getLastColumn()).getValues()[0]; //read headers
+    this.cols = columns;
+  }
+  
+  //GET LAST ROW IN ONE COLUMN BY NAME EXCEL OBJECT
+  this.getLastRowinColName = function (colname, firstline){
+    var last = this.getLastRow();
+    last++; //Je rajoute une nouvelle ligne de sécurité
+    var colnumber = this.get_colnumber_fromname(colname);
+    colnumber++;//Différence entre le numero de la colonne 
+    var cell = this.sheet.getRange(firstline,colnumber);    
+    for (var j= 0; j < last ; j++) {
+      cell = cell.offset(1, 0); 
+      if (cell.getValue() == ""){
+        return cell.getRow();
+        break
+      }
+    }
+  }
+  
+  //GET ALL VALUES IN ONE COLUMN BY NAME EXCEL OBJECT
+  this.getValuesFromCol = function (firstrow,colname){
+    var lastrowcol = this.getLastRowinColName(colname,firstrow);
+    return this.sheet.getRange(firstrow,this.get_colnumber_fromname(colname)+1,lastrowcol-firstrow).getValues();
+  }
+  
   //*************** COLUMNS END ***************
   
   //*************** VALUES START ***************
