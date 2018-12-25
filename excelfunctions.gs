@@ -90,6 +90,20 @@ var ExcelClass = function(){
     this.cols = columns;
   }
   
+  //GET LAST ROW IN ONE COLUMN BY NUMBER OBJECT
+  this.getLastRowinCol = function (colnumber, firstline){
+    var last = this.getLastRow();
+    last++; //Je rajoute une nouvelle ligne de sécurité
+    var cell = this.sheet.getRange(firstline,colnumber);    
+    for (var j= 0; j < last ; j++) {
+      cell = cell.offset(1, 0); 
+      if (cell.getValue() == ""){
+        return cell.getRow();
+        break
+      }
+    }
+  }
+  
   //GET LAST ROW IN ONE COLUMN BY NAME EXCEL OBJECT
   this.getLastRowinColName = function (colname, firstline){
     var last = this.getLastRow();
