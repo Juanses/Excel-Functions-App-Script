@@ -121,9 +121,20 @@ var ExcelClass = function(){
   }
   
   //GET ALL VALUES IN ONE COLUMN BY NAME EXCEL OBJECT
-  this.getValuesFromCol = function (firstrow,colname){
+  this.getValuesFromColByName = function (firstrow,colname){
     var lastrowcol = this.getLastRowinColName(colname,firstrow);
     return this.sheet.getRange(firstrow,this.get_colnumber_fromname(colname)+1,lastrowcol-firstrow).getValues();
+  }
+  
+  //GET ALL VALUES IN ONE COLUMN BY NAME EXCEL OBJECT
+  this.getValuesFromCol = function (firstrow,col){
+    var results = [];
+    var lastrowcol = this.getLastRowinCol(col,firstrow);
+    var values = this.sheet.getRange(firstrow,col,lastrowcol-firstrow).getValues();
+    for (var index in values){
+      results.push(values[index][0]);
+    }
+    return results;
   }
   
   //*************** COLUMNS END ***************
